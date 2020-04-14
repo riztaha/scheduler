@@ -9,7 +9,7 @@ import Button from "components/Button";
 import DayListItem from "../src/components/DayListItem";
 import DayList from "../src/components/DayList";
 import InterviewerListItem from "../src/components/InterviewerListItem";
-import InterviewerList from "../src/components/InterviewerListItem";
+import InterviewerList from "../src/components/InterviewerList";
 
 storiesOf("Button", module)
   .addParameters({
@@ -116,13 +116,13 @@ storiesOf("InterviewerList", module)
   .add("Initial", () => (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ))
   .add("Preselected", () => (
     <InterviewerList
       interviewers={interviewers}
       interviewer={3}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ));
