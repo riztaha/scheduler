@@ -13,6 +13,9 @@ import InterviewerList from "../src/components/InterviewerList";
 import Appointment from "../src/components/Appointment/index";
 import Header from "../src/components/Appointment/Header";
 import Empty from "../src/components/Appointment/Empty";
+import Show from "../src/components/Appointment/Show";
+import Confirm from "../src/components/Appointment/Confirm";
+import Status from "../src/components/Appointment/Status";
 
 storiesOf("Button", module)
   .addParameters({
@@ -145,4 +148,21 @@ storiesOf("Appointment", module)
   })
   .add("Empty", () => {
     return <Empty onAdd={action("onAdd")} />;
+  })
+  .add("Show", () => {
+    return (
+      <Show onEdit={action("onEdit")} onDelete={action("onDelete")}></Show>
+    );
+  })
+  .add("Confirm", () => {
+    return (
+      <Confirm
+        message="Delete the appointment?"
+        onConfirm={action("onConfirm")}
+        onCancel={action("onCancel")}
+      ></Confirm>
+    );
+  })
+  .add("Status", () => {
+    return <Status message="Deleting"></Status>;
   });
