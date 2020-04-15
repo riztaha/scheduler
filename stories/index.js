@@ -11,7 +11,8 @@ import DayList from "../src/components/DayList";
 import InterviewerListItem from "../src/components/InterviewerListItem";
 import InterviewerList from "../src/components/InterviewerList";
 import Appointment from "../src/components/Appointment/index";
-import Header from "../src/components/Appointment/header";
+import Header from "../src/components/Appointment/Header";
+import Empty from "../src/components/Appointment/Empty";
 
 storiesOf("Button", module)
   .addParameters({
@@ -141,4 +142,7 @@ storiesOf("Appointment", module)
   })
   .add("Header", () => {
     return <Header time="12pm"></Header>;
+  })
+  .add("Empty", () => {
+    return <Empty onAdd={action("onAdd")} />;
   });
