@@ -4,6 +4,9 @@ import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment";
 
+//Main application for the app
+
+//Some dataset we are currently working with within the app.
 const days = [
   {
     id: 1,
@@ -77,16 +80,17 @@ const appointments = [
   },
 ];
 
+//React function that renders the whole app together.
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
 
   const listAppointments = appointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment}></Appointment>;
   });
+
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -103,7 +107,6 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
         {listAppointments}
         <Appointment key="last" time="5pm" />
       </section>

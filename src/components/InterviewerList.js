@@ -3,6 +3,7 @@ import "./InterviewerList.scss";
 import "./InterviewerListItem.js";
 import InterviewerListItem from "./InterviewerListItem.js";
 
+//Takes each interviewer and puts them in a list, then displays the list of interviewers.
 export default function InterviewerList(props) {
   const listInterviewers = props.interviewers.map((interviewer) => {
     return (
@@ -16,7 +17,6 @@ export default function InterviewerList(props) {
     );
   });
 
-  console.log(listInterviewers);
   return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>

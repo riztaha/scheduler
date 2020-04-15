@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import InterviewerList from "../InterviewerList.js";
 import Button from "components/Button";
 
+//The whole form which sets the student based on the input field and selects
+//an instructor based on which instructor they clicked.
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);

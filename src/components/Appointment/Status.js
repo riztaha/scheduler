@@ -1,5 +1,6 @@
 import React from "react";
 
+//View to show the loading render circle.
 export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">

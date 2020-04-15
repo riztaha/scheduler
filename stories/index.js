@@ -19,6 +19,7 @@ import Status from "../src/components/Appointment/Status";
 import Error from "../src/components/Appointment/Error";
 import Form from "../src/components/Appointment/Form";
 
+//Story for Button
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -35,6 +36,7 @@ storiesOf("Button", module)
     </Button>
   ));
 
+//Story for DayListItem
 storiesOf("DayListItem", module) //Initiates Storybook and registers our DayListItem component
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -46,6 +48,7 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
   ));
 
+//Some dataset we're using to show us the days and how many spots are available.
 const days = [
   {
     id: 1,
@@ -64,6 +67,7 @@ const days = [
   },
 ];
 
+//Stories for DayList. Clicking on the day set's the day and show's us the information for that specific day.
 storiesOf("DayList", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -75,12 +79,15 @@ storiesOf("DayList", module)
     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
   ));
 
+//Dataset we're using for an interviewer.
 const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
   avatar: "https://i.imgur.com/LpaY82x.png",
 };
 
+//Allows someone to click on an interviewer and it will show the interviewer's name, avatar, and allows
+//the student to set that interviewer they selected for the appointment.
 storiesOf("InterviewerListItem", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -109,6 +116,7 @@ storiesOf("InterviewerListItem", module)
     />
   ));
 
+//Dataset for list of interviewers
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
@@ -117,6 +125,7 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" },
 ];
 
+//Same thing as the previous storiesOf but now shows all the interviewers.
 storiesOf("InterviewerList", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -135,6 +144,8 @@ storiesOf("InterviewerList", module)
     />
   ));
 
+//Story for appointments. Appointments need to either be empty or full/shown. They need to be confirmed or have an error
+//Appointments can be created or edited and finally they can booked.
 storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }],

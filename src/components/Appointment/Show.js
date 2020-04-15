@@ -1,5 +1,7 @@
 import React from "react";
 
+//Show view which tells us who the student is, which interviewer was selected, and the time it was selected at.
+//They can edit or delete the appointment as well.
 export default function Show(props) {
   return (
     <main className="appointment__card appointment__card--show">

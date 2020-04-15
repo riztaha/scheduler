@@ -1,5 +1,6 @@
 import React from "react";
 
+//Header view which shows the time slot.
 export default function Header(props) {
   return (
     <header className="appointment__time">
