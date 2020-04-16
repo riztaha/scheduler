@@ -4,7 +4,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay } from "/helpers/selectors";
+// import { getAppointmentsForDay } from "/helpers/selectors";
 
 axios.defaults.baseURL = "http://localhost:8001";
 
@@ -86,15 +86,20 @@ const appointments = [
 
 //React function that renders the whole app together.
 export default function Application(props) {
-  //Setting the day to show Monday
-  const [day, setDay] = useState("Monday");
-  //Setting list of days & associated data as empty, and then retrieving from API
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {},
+  });
+
+  const setDay = (day) => setState({ ...state, day });
+  const setDays = (days) => setState((prev) => ({ ...prev, days }));
+
   useEffect(() => {
     axios.get("/api/days").then((response) => {
       setDays(response.data);
     });
-  }, [setDays]);
+  }, []);
 
   const listAppointments = appointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment}></Appointment>;
@@ -110,7 +115,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} day={day} setDay={setDay} />
+          <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
