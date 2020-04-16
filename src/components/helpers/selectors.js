@@ -7,7 +7,7 @@
 
 //will return an array of appointments for that day
 
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
   const filter = [];
   state.days.forEach((obj) => {
     if (obj.name === day) {
