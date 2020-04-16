@@ -4,6 +4,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment";
+import { getAppointmentsForDay } from "/helpers/selectors";
 
 axios.defaults.baseURL = "http://localhost:8001";
 
@@ -85,7 +86,9 @@ const appointments = [
 
 //React function that renders the whole app together.
 export default function Application(props) {
+  //Setting the day to show Monday
   const [day, setDay] = useState("Monday");
+  //Setting list of days & associated data as empty, and then retrieving from API
   const [days, setDays] = useState([]);
   useEffect(() => {
     axios.get("/api/days").then((response) => {
