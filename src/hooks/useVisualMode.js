@@ -6,9 +6,12 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   //transition function within useVisualMode that will take in a new mode and update the mode state with the new value.
-  const transition = (nextMode) => {
+  // replace = false as an indicator in case someone wants to transition back but do not want to see the loading show.
+  const transition = (nextMode, replace = false) => {
     setMode(nextMode);
-    setHistory((el) => [...el, nextMode]);
+    if (replace === false) {
+      setHistory((el) => [...el, nextMode]);
+    }
   };
 
   //back function needs to keep track so we make a history array, whenever someone
