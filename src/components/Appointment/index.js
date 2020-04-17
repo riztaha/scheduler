@@ -23,17 +23,19 @@ export default function Appointment(props) {
   const onAdd = () => transition(CREATE);
   const onCancel = () => back();
   const onSave = () => transition(SHOW);
+  console.log("INDEX ====>", props);
 
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer,
     };
-    props.bookInterview(name, interviewer);
+    props.bookInterview(props.id, interview);
+
+    onSave();
   }
 
   // console.log(props);
-  // console.log("INDEX ====>", props.interview);
   return (
     <>
       <article className="appointment">

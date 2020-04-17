@@ -4,7 +4,7 @@ import classnames from "classnames";
 
 //Takes the interviewer's properties and displays the specific interviewer
 export default function interviewerListItem(props) {
-  const { id, name, avatar, selected, setInterviewer } = props;
+  const { name, avatar, selected, setInterviewer } = props;
   const interviewerClass = classnames("interviewers__item", {
     "interviwers__item--selected": selected,
   });
