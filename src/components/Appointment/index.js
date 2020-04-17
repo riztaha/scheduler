@@ -19,12 +19,21 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  //Functions for each
   const onAdd = () => transition(CREATE);
   const onCancel = () => back();
   const onSave = () => transition(SHOW);
 
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+    props.bookInterview(name, interviewer);
+  }
+
   // console.log(props);
-  console.log("INDEX ====>", props.interview);
+  // console.log("INDEX ====>", props.interview);
   return (
     <>
       <article className="appointment">
@@ -40,7 +49,7 @@ export default function Appointment(props) {
           <Form
             interviewers={props.interviewers}
             onCancel={onCancel}
-            onSave={onSave}
+            onSave={save}
           />
         )}
       </article>
