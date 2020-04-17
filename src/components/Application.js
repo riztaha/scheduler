@@ -5,6 +5,8 @@ import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview } from "./helpers/selectors.js";
+// import useVisualMode from "hooks/useVisualMode.js";
+import Empty from "./Appointment/Empty.js";
 // import getInterview from "./helpers/selectors.js";
 
 axios.defaults.baseURL = "http://localhost:8001";
@@ -91,6 +93,7 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: {},
+    interviewers: {},
   });
 
   const setDay = (day) => setState({ ...state, day });
@@ -106,7 +109,7 @@ export default function Application(props) {
         ...prev,
         days: all[0].data,
         appointments: all[1].data,
-        interviewer: all[2].data,
+        interviewers: all[2].data,
       }));
     });
   }, []);
@@ -121,7 +124,6 @@ export default function Application(props) {
 
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-
     return (
       <Appointment
         key={appointment.id}
@@ -131,6 +133,7 @@ export default function Application(props) {
       />
     );
   });
+
   return (
     <main className="layout">
       <section className="sidebar">
