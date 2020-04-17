@@ -4,88 +4,17 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "components/DayList.js";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "./helpers/selectors.js";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "./helpers/selectors.js";
 // import useVisualMode from "hooks/useVisualMode.js";
-import Empty from "./Appointment/Empty.js";
-// import getInterview from "./helpers/selectors.js";
+// import Empty from "./Appointment/Empty.js";
 
 axios.defaults.baseURL = "http://localhost:8001";
 
 //Main application for the app
-
-//Some dataset we are currently working with within the app.
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
-
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       },
-//     },
-//   },
-//   {
-//     id: 3,
-//     time: "10am",
-//     interview: {
-//       student: "Taha Rizvi",
-//       interviewer: {
-//         id: 3,
-//         name: "Mildred Nazir",
-//         avatar: "https://i.imgur.com/T2WwVfS.png",
-//       },
-//     },
-//   },
-//   {
-//     id: 4,
-//     time: "11am",
-//     interview: {
-//       student: "Another Student",
-//       interviewer: {
-//         id: 2,
-//         name: "Tori Malcolm",
-//         avatar: "https://i.imgur.com/Nmx0Qxo.png",
-//       },
-//     },
-//   },
-//   {
-//     id: 5,
-//     time: "2pm",
-//     interview: {
-//       student: "Another 2nd Student",
-//       interviewer: {
-//         id: 5,
-//         name: "Sven Jones",
-//         avatar: "https://i.imgur.com/twYrpay.jpg",
-//       },
-//     },
-//   },
-// ];
 
 //React function that renders the whole app together.
 export default function Application(props) {
@@ -120,16 +49,17 @@ export default function Application(props) {
   //   return <Appointment key={appointment.id} {...appointment}></Appointment>;
   // });
 
-  const appointments = getAppointmentsForDay(state, state.day);
+  const appointmentsArr = getAppointmentsForDay(state, state.day);
+  const interviewersArr = getInterviewersForDay(state, state.day);
 
-  const schedule = appointments.map((appointment) => {
+  const schedule = appointmentsArr.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={interview}
+        interview={interviewersArr}
       />
     );
   });

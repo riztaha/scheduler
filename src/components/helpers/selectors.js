@@ -1,10 +1,3 @@
-// export const getAppointmentsForDay = (state, day) => {
-//   const selectedDay = state.find((obj) => obj.name === day);
-//   const getAppts = selectedDay.appointments;
-//   if (getAppts === undefined) return [];
-//   else return getAppts;
-// };
-
 //will return an array of appointments for that day eg [ {id:1, time: 12pm, interview: {student: name, interviewer: 3}}, {}. ...]
 export function getAppointmentsForDay(state, day) {
   const filter = [];
@@ -32,4 +25,17 @@ export function getInterview(state, interview) {
       interviewer: state.interviewers[interview.interviewer],
     };
   }
+}
+
+//Gets an array of Interviewer IDs for a specified day
+export function getInterviewersForDay(state, day) {
+  const filter = [];
+  state.days.forEach((obj) => {
+    if (obj.name === day) {
+      obj.interviewers.forEach((id) => {
+        filter.push(state.interviewers[id]);
+      });
+    }
+  });
+  return filter;
 }
