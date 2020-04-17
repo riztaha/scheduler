@@ -21,7 +21,10 @@ export default function Appointment(props) {
 
   const onAdd = () => transition(CREATE);
   const onCancel = () => back();
+  const onSave = () => transition(SHOW);
 
+  // console.log(props);
+  console.log("INDEX ====>", props.interview);
   return (
     <>
       <article className="appointment">
@@ -34,7 +37,11 @@ export default function Appointment(props) {
           />
         )}
         {mode === CREATE && (
-          <Form interviewers={[]} onCancel={onCancel} onSave={props.onSave} />
+          <Form
+            interviewers={props.interviewers}
+            onCancel={onCancel}
+            onSave={onSave}
+          />
         )}
       </article>
     </>

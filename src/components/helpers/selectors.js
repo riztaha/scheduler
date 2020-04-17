@@ -18,8 +18,8 @@ export function getInterview(state, interview) {
   if (!interview) {
     return null;
   } else {
-    // let tmp = state.interviewers[interview.interviewer];
-    // return { ...interview, tmp };
+    console.log("STATE====>", state);
+    console.log("state.interviewers", state.interviewers);
     return {
       student: interview.student,
       interviewer: state.interviewers[interview.interviewer],

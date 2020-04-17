@@ -54,12 +54,14 @@ export default function Application(props) {
 
   const schedule = appointmentsArr.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+    console.log("APPLICATION 'interview' =====>", appointment.interview);
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={interviewersArr}
+        interview={interview}
+        interviewers={interviewersArr}
       />
     );
   });
