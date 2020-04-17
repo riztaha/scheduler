@@ -46,7 +46,7 @@ export default function Application(props) {
   const interviewersArr = getInterviewersForDay(state, state.day);
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    // console.log(id, interview);
 
     const appointment = {
       ...state.appointments[id],
@@ -58,8 +58,18 @@ export default function Application(props) {
       [id]: appointment,
     };
 
-    setState({ ...state, appointments });
-    console.log(state);
+    // setState({ ...state, appointments }); THIS WILL NOW BE USED ONCE IT 'PUTs' THE DATA
+    // console.log(state);
+
+    return axios({
+      method: `PUT`,
+      url: `/api/appointments/${id}`,
+      data: { interview },
+    }).then((res) => {
+      //setting the state once it's placed the data.
+      console.log(res);
+      setState({ ...state, appointments });
+    });
   }
 
   const schedule = appointmentsArr.map((appointment) => {
