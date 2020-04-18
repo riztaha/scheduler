@@ -92,6 +92,20 @@ export default function Application(props) {
     });
   }
 
+  // function editInterview(id, interview) {
+  //   const appointment = {
+  //     ...state.appointments[id],
+  //     interview,
+  //   }
+
+  //   const appointments = {
+  //     ...state.appointments,
+  //     [id]: appointment
+  //   }
+
+  // return axios()
+  // }
+
   const schedule = appointmentsArr.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     // console.log("APPLICATION 'interview' =====>", appointment.interview);
