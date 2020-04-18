@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 //Index for appointments. Shows the time, if there's and interview schedule then shows
@@ -19,6 +20,8 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   //Destructuring/importing the custom hook
   const { mode, transition, back } = useVisualMode(
@@ -30,15 +33,17 @@ export default function Appointment(props) {
   const onCancel = () => back();
   const onSave = () => transition(SHOW);
   const onLoad = () => transition(SAVING);
-  const onDelete = () => transition(DELETING);
+  const onDelete = () => transition(DELETING, true);
   const onEmpty = () => transition(EMPTY);
   const onConfirm = () => transition(CONFIRM);
   const onEdit = () => transition(EDIT);
+  const onError_Save = () => transition(ERROR_SAVE, true);
+  const onError_Delete = () => transition(ERROR_DELETE, true);
 
   console.log("INDEX ====>", props);
 
   //Function to save an appointment, takes in two arguments, name of student and interviewer details
-  //It transitions to the loading screen (SAVING ln63, within the Status view.), then books the interview, then transitions to the SHOW page.
+  //It transitions to the loading screen (SAVING mode, within the Status view.), then books the interview, then transitions to the SHOW page.
   function saveAppt(name, interviewer) {
     onLoad();
 
@@ -46,20 +51,27 @@ export default function Appointment(props) {
       student: name,
       interviewer,
     };
-    props.bookInterview(props.id, interview).then(() => onSave());
+    props
+      .bookInterview(props.id, interview)
+      .then(() => onSave())
+      .catch(() => onError_Save());
   }
 
-  function deleteAppt() {
+  //Function to delete an appointment, usese the prop function cancelInterview from application.js and the prop id of the appt.
+  function destroy() {
     onDelete();
-    props.cancelInterview(props.id).then(() => onEmpty());
+    props
+      .cancelInterview(props.id)
+      .then(() => onEmpty())
+      .catch(() => onError_Delete());
   }
 
+  //Function to edit an appoint. In the Form we are passing all the props to edit it successfully.
   function editAppt() {
     console.log("in edit mode");
     onEdit();
   }
 
-  // console.log(props);
   return (
     <>
       <article className="appointment">
@@ -89,7 +101,7 @@ export default function Appointment(props) {
         {mode === CONFIRM && (
           <Confirm
             onCancel={onCancel}
-            onConfirm={deleteAppt}
+            onConfirm={destroy}
             message={"Are you sure you want to delete this appointment?"}
           ></Confirm>
         )}
@@ -106,6 +118,18 @@ export default function Appointment(props) {
             onCancel={onCancel}
             onSave={saveAppt}
           ></Form>
+        )}
+        {mode === ERROR_SAVE && (
+          <Error
+            message={"Error while saving. Please try again later."}
+            onClose={onCancel}
+          ></Error>
+        )}
+        {mode === ERROR_DELETE && (
+          <Error
+            message={"Error while deleting. Please try again later."}
+            onClose={onCancel}
+          ></Error>
         )}
       </article>
     </>
