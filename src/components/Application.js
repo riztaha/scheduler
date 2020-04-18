@@ -71,7 +71,7 @@ export default function Application(props) {
   }
 
   function cancelInterview(id) {
-    console.log(id);
+    console.log("ID OF APPT======>", id);
 
     const appointment = {
       ...state.appointments[id],
@@ -82,6 +82,7 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
+
     return axios({
       method: `DELETE`,
       url: `api/appointments/${id}`,

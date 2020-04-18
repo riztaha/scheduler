@@ -29,6 +29,7 @@ export default function Appointment(props) {
   const onSave = () => transition(SHOW);
   const onLoad = () => transition(SAVING);
   const onDelete = () => transition(DELETING);
+  const onEmpty = () => transition(EMPTY);
 
   // console.log("INDEX ====>", props);
 
@@ -45,7 +46,8 @@ export default function Appointment(props) {
   }
 
   function deleteAppt(id) {
-    props.cancelInterview(props.id);
+    onDelete();
+    props.cancelInterview(props.id).then(() => onEmpty());
   }
 
   // console.log(props);
@@ -70,9 +72,7 @@ export default function Appointment(props) {
         )}
         {mode === SAVING && <Status message={"Saving Appointment"}></Status>}
         {mode === DELETING && (
-          <Confirm
-            message={"Are you sure you want to delete the appointment?"}
-          ></Confirm>
+          <Status message={"Deleting the Appointment."}></Status>
         )}
       </article>
     </>
