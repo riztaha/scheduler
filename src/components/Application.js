@@ -58,15 +58,34 @@ export default function Application(props) {
       [id]: appointment,
     };
 
-    // setState({ ...state, appointments }); THIS WILL NOW BE USED ONCE IT 'PUTs' THE DATA
-    // console.log(state);
-
+    //Placing it in the db
     return axios({
       method: `PUT`,
       url: `/api/appointments/${id}`,
       data: { interview },
     }).then((res) => {
       //setting the state once it's placed the data.
+      console.log(res);
+      setState({ ...state, appointments });
+    });
+  }
+
+  function cancelInterview(id) {
+    console.log(id);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    return axios({
+      method: `DELETE`,
+      url: `api/appointments/${id}`,
+    }).then((res) => {
       console.log(res);
       setState({ ...state, appointments });
     });
@@ -83,6 +102,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewersArr}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });

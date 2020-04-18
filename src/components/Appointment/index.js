@@ -5,6 +5,7 @@ import Show from "./Show.js";
 import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
+import Confirm from "./Confirm";
 import useVisualMode from "hooks/useVisualMode";
 
 //Index for appointments. Shows the time, if there's and interview schedule then shows
@@ -15,6 +16,7 @@ export default function Appointment(props) {
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
+  const DELETING = "DELETING";
 
   //Destructuring/importing the custom hook
   const { mode, transition, back } = useVisualMode(
@@ -26,12 +28,13 @@ export default function Appointment(props) {
   const onCancel = () => back();
   const onSave = () => transition(SHOW);
   const onLoad = () => transition(SAVING);
+  const onDelete = () => transition(DELETING);
 
   // console.log("INDEX ====>", props);
 
   //Function to save an appointment, takes in two arguments, name of student and interviewer details
   //It transitions to the loading screen (SAVING ln63, within the Status view.), then books the interview, then transitions to the SHOW page.
-  function save(name, interviewer) {
+  function saveAppt(name, interviewer) {
     onLoad();
 
     const interview = {
@@ -39,6 +42,10 @@ export default function Appointment(props) {
       interviewer,
     };
     props.bookInterview(props.id, interview).then(() => onSave());
+  }
+
+  function deleteAppt(id) {
+    props.cancelInterview(props.id);
   }
 
   // console.log(props);
@@ -51,16 +58,22 @@ export default function Appointment(props) {
           <Show
             student={props.interview.student}
             interviewer={props.interview.interviewer}
+            onDelete={deleteAppt}
           />
         )}
         {mode === CREATE && (
           <Form
             interviewers={props.interviewers}
             onCancel={onCancel}
-            onSave={save}
+            onSave={saveAppt}
           />
         )}
         {mode === SAVING && <Status message={"Saving Appointment"}></Status>}
+        {mode === DELETING && (
+          <Confirm
+            message={"Are you sure you want to delete the appointment?"}
+          ></Confirm>
+        )}
       </article>
     </>
   );
