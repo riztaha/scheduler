@@ -17,6 +17,7 @@ export default function Appointment(props) {
   const CREATE = "CREATE";
   const SAVING = "SAVING";
   const DELETING = "DELETING";
+  const CONFIRM = "CONFIRM";
 
   //Destructuring/importing the custom hook
   const { mode, transition, back } = useVisualMode(
@@ -30,6 +31,7 @@ export default function Appointment(props) {
   const onLoad = () => transition(SAVING);
   const onDelete = () => transition(DELETING);
   const onEmpty = () => transition(EMPTY);
+  const onConfirm = () => transition(CONFIRM);
 
   // console.log("INDEX ====>", props);
 
@@ -45,7 +47,7 @@ export default function Appointment(props) {
     props.bookInterview(props.id, interview).then(() => onSave());
   }
 
-  function deleteAppt(id) {
+  function deleteAppt() {
     onDelete();
     props.cancelInterview(props.id).then(() => onEmpty());
   }
@@ -60,7 +62,7 @@ export default function Appointment(props) {
           <Show
             student={props.interview.student}
             interviewer={props.interview.interviewer}
-            onDelete={deleteAppt}
+            onDelete={onConfirm}
           />
         )}
         {mode === CREATE && (
@@ -73,6 +75,13 @@ export default function Appointment(props) {
         {mode === SAVING && <Status message={"Saving Appointment"}></Status>}
         {mode === DELETING && (
           <Status message={"Deleting the Appointment."}></Status>
+        )}
+        {mode === CONFIRM && (
+          <Confirm
+            onCancel={onCancel}
+            onConfirm={deleteAppt}
+            message={"Are you sure you want to delete this appointment?"}
+          ></Confirm>
         )}
       </article>
     </>
