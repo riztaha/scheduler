@@ -40,7 +40,7 @@ export default function Appointment(props) {
   const onError_Save = () => transition(ERROR_SAVE, true);
   const onError_Delete = () => transition(ERROR_DELETE, true);
 
-  console.log("INDEX ====>", props);
+  // console.log("INDEX ====>", props.interview);
 
   //Function to save an appointment, takes in two arguments, name of student and interviewer details
   //It transitions to the loading screen (SAVING mode, within the Status view.), then books the interview, then transitions to the SHOW page.

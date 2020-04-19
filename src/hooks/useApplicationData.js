@@ -8,6 +8,7 @@ export default function useApplicationData() {
     days: [],
     appointments: {},
     interviewers: {},
+    spots: 5,
   });
 
   const setDay = (day) => setState({ ...state, day });
@@ -27,6 +28,14 @@ export default function useApplicationData() {
     });
   }, []);
 
+  //helper function to calculate spots when given the day, and list of appointments
+  const calcSpots = (day, appointments) =>
+    day.appointments.length -
+    day.appointments.reduce(
+      (spots, id) => (appointments[id].interview ? spots + 1 : spots),
+      0
+    );
+
   function bookInterview(id, interview) {
     // console.log(id, interview);
 
@@ -40,6 +49,18 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    //Whenever someone books an interivew, the days function calcs if there is an appointment-id for that day, then returns
+    //the day and the spots for that day.
+    const days = state.days.map((day) => {
+      if (day.appointments[id]) {
+        console.log("CALC SPOTS ======>", calcSpots(day, appointments));
+        console.log("Day ====>", day);
+        return { ...day, spots: calcSpots(day, appointments) };
+      }
+      return day;
+    });
+    // console.log("APPOINTMENT -=====>", appointment);
+    // console.log("")
     //Placing data in the database
     return axios({
       method: `PUT`,
@@ -48,12 +69,12 @@ export default function useApplicationData() {
     }).then((res) => {
       //setting the state once it's placed the data in the database.
       //   console.log(res);
-      setState({ ...state, appointments });
+      setState({ ...state, appointments, days });
     });
   }
 
   function cancelInterview(id) {
-    console.log("ID OF APPT======>", id);
+    // console.log("ID OF APPT======>", id);
 
     const appointment = {
       ...state.appointments[id],
@@ -65,12 +86,21 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
+    const days = state.days.map((day) => {
+      if (day.appointments[id]) {
+        console.log("CALC SPOTS ======>", calcSpots(day, appointments));
+        console.log("Day ====>", day);
+        return { ...day, spots: calcSpots(day, appointments) };
+      }
+      return day;
+    });
+
     return axios({
       method: `DELETE`,
       url: `api/appointments/${id}`,
     }).then((res) => {
       console.log(res);
-      setState({ ...state, appointments });
+      setState({ ...state, appointments, days });
     });
   }
   return { state, setDay, bookInterview, cancelInterview };
