@@ -53,8 +53,8 @@ export default function useApplicationData() {
     //the day and the spots for that day.
     const days = state.days.map((day) => {
       if (day.appointments[id]) {
-        console.log("CALC SPOTS ======>", calcSpots(day, appointments));
         console.log("Day ====>", day);
+        console.log("CALC SPOTS ======>", calcSpots(day, appointments));
         return { ...day, spots: calcSpots(day, appointments) };
       }
       return day;
