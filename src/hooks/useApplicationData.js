@@ -62,11 +62,7 @@ export default function useApplicationData() {
     // console.log("APPOINTMENT -=====>", appointment);
     // console.log("")
     //Placing data in the database
-    return axios({
-      method: `PUT`,
-      url: `/api/appointments/${id}`,
-      data: { interview },
-    }).then((res) => {
+    return axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
       //setting the state once it's placed the data in the database.
       //   console.log(res);
       setState({ ...state, appointments, days });
@@ -95,10 +91,7 @@ export default function useApplicationData() {
       return day;
     });
 
-    return axios({
-      method: `DELETE`,
-      url: `api/appointments/${id}`,
-    }).then((res) => {
+    return axios.delete(`api/appointments/${id}`).then((res) => {
       console.log(res);
       setState({ ...state, appointments, days });
     });
