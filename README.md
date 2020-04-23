@@ -4,7 +4,7 @@ Interview Scheduler is single page application (SPA) which allows users to manag
 
 ## Final Product
 
-!["Main"](https://github.com/riztaha/scheduler/blob/master/docs/Monday-ex.png)
+!["Main"](https://github.com/riztaha/scheduler/blob/master/docs/Monday-example.png)
 ======
 
 !["Create"](https://github.com/riztaha/scheduler/blob/master/docs/Creating-Appt.png)
