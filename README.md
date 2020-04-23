@@ -4,11 +4,11 @@ Interview Scheduler is single page application (SPA) which allows users to manag
 
 ## Final Product
 
-!["Main"](https://github.com/riztaha/scheduler/blob/master/docs/Monday-example.png)
-!["Create"](https://github.com/riztaha/scheduler/blob/master/docs/Creating-Appt.png)
-!["Error"](https://github.com/riztaha/scheduler/blob/master/docs/Error-Handling.png)
-!["Delete"](https://github.com/riztaha/scheduler/blob/master/docs/Confirm-Delete.png)
-!["Server-Error"](https://github.com/riztaha/scheduler/blob/master/docs/Server-Error-Handling.png)
+- !["Main"](https://github.com/riztaha/scheduler/blob/master/docs/Monday-example.png)
+- !["Create"](https://github.com/riztaha/scheduler/blob/master/docs/Creating-Appt.png)
+- !["Error"](https://github.com/riztaha/scheduler/blob/master/docs/Error-Handling.png)
+- !["Delete"](https://github.com/riztaha/scheduler/blob/master/docs/Confirm-Delete.png)
+- !["Server-Error"](https://github.com/riztaha/scheduler/blob/master/docs/Server-Error-Handling.png)
 
 ## Setup
 
