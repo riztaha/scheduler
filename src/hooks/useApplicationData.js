@@ -52,7 +52,7 @@ export default function useApplicationData() {
     //Whenever someone books an interivew, the days function calcs if there is an appointment-id for that day, then returns
     //the day and the spots for that day.
     const days = state.days.map((day) => {
-      if (day.appointments[id]) {
+      if (day.appointments.includes(id)) {
         console.log("Day ====>", day);
         console.log("CALC SPOTS ======>", calcSpots(day, appointments));
         return { ...day, spots: calcSpots(day, appointments) };
@@ -70,7 +70,8 @@ export default function useApplicationData() {
   }
 
   function cancelInterview(id) {
-    // console.log("ID OF APPT======>", id);
+    // console.log("CANCEL INTERVIEW ======>", id);
+    // console.log(state.days);
 
     const appointment = {
       ...state.appointments[id],
@@ -83,16 +84,19 @@ export default function useApplicationData() {
     };
 
     const days = state.days.map((day) => {
-      if (day.appointments[id]) {
+      // console.log("Day.Appts =========>", day.appointments);
+      if (day.appointments.includes(id)) {
         console.log("CALC SPOTS ======>", calcSpots(day, appointments));
         console.log("Day ====>", day);
         return { ...day, spots: calcSpots(day, appointments) };
       }
+      // console.log("Does not see appointment id");
       return day;
     });
 
+    // console.log("AFTER DAYS====>");
     return axios.delete(`api/appointments/${id}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       setState({ ...state, appointments, days });
     });
   }
