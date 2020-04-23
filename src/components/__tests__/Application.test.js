@@ -16,8 +16,20 @@ import {
 } from "@testing-library/react";
 
 import Application from "components/Application";
+import axios from "axios";
 
 afterEach(cleanup);
+
+describe("Appointment", () => {
+  it("defaults to Monday and changes the schedule when a new day is selected", async () => {
+    const { getByText } = render(<Application />);
+
+    await waitForElement(() => getByText("Monday"));
+    fireEvent.click(getByText("Tuesday"));
+
+    expect(getByText("Leopold Silvers")).toBeInTheDocument();
+  });
+});
 
 describe("Application", () => {
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
@@ -133,6 +145,92 @@ describe("Application", () => {
     // 9. See if spots for the day have not changed.
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
+    );
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+  });
+
+  it("shows the save error when failing to save an appointment", async () => {
+    // 1. Rejecting the PUT request for test purposes only once.
+    axios.put.mockRejectedValueOnce();
+
+    const { container } = render(<Application />);
+    // 2. Seeing if the student exists
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments[0];
+
+    // 3. Adding a new appointment
+    fireEvent.click(getByAltText(appointment, "Add"));
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Jane Doe" },
+    });
+
+    // 4. Selecting interviewer and saving
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+    // 5. Saving appointment
+    fireEvent.click(getByText(appointment, "Save"));
+
+    // 6. Seeing the saving loading icon.
+    expect(getByText(appointment, "Saving Appointment")).toBeInTheDocument();
+
+    // 7. Error message received.
+    await waitForElement(() => getByText(container, "Error"));
+
+    //8. User presses the close button on the error msg.
+    fireEvent.click(getByAltText(appointment, "Close"));
+
+    //9. Expecting to see the form again with the Save button.
+    expect(getByText(appointment, "Save")).toBeInTheDocument();
+
+    //10. Day still has the same number of spots remaining.
+    const day = getAllByTestId(container, "day").find((day) =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+  });
+
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    // 1. Rejecting the DELETE request for test purposes only once.
+    axios.delete.mockRejectedValueOnce();
+
+    const { container } = render(<Application />);
+    // 2. Seeing if the student exists
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointment = getAllByTestId(
+      container,
+      "appointment"
+    ).find((appointment) => queryByText(appointment, "Archie Cohen"));
+
+    // 3. Clicking the delete button on the appointment
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    // 4. Should see a confirmation asking to delete appointment.
+    expect(
+      getByText(
+        appointment,
+        "Are you sure you want to delete this appointment?"
+      )
+    ).toBeInTheDocument();
+
+    // 5. Click the confirmation.
+    fireEvent.click(getByText(appointment, "Confirm"));
+
+    // 6. Should see a Deleting loading status.
+    expect(
+      getByText(appointment, "Deleting the Appointment.")
+    ).toBeInTheDocument();
+
+    // 7. Error message should appear.
+    await waitForElement(() => getByText(appointment, "Error"));
+
+    // 8. Close error message and see the appointment again with the delete button.
+    fireEvent.click(getByAltText(appointment, "Close"));
+    expect(getByAltText(appointment, "Delete")).toBeInTheDocument();
+
+    // 9. Spots remaining for the day should not change as could not delete the appointment.
+    const day = getAllByTestId(container, "day").find((day) =>
+      queryByText(day, "Tuesday")
     );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
