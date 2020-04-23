@@ -34,6 +34,7 @@ https://github.com/lighthouse-labs/scheduler-api
 ```sh
 npm start
 ```
+Go to http://localhost:8000/
 
 ## Running Jest Test Framework
 
@@ -52,6 +53,8 @@ npm run storybook
 ```sh
 npm start
 ```
+- http://localhost:8001/
+- To reset database, go to http://localhost:8001/api/debug/reset
 
 ## Technical Specifications & App behaviour
 React
