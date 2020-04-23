@@ -14,12 +14,9 @@ export function getAppointmentsForDay(state, day) {
 // will return an object with interview data when the object passed through
 //contains interviewer's ID
 export function getInterview(state, interview) {
-  //   console.log(state);
   if (!interview) {
     return null;
   } else {
-    // console.log("STATE====>", state);
-    // console.log("state.interviewers", state.interviewers);
     return {
       student: interview.student,
       interviewer: state.interviewers[interview.interviewer],

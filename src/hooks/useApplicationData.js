@@ -37,8 +37,6 @@ export default function useApplicationData() {
     );
 
   function bookInterview(id, interview) {
-    // console.log(id, interview);
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -53,26 +51,18 @@ export default function useApplicationData() {
     //the day and the spots for that day.
     const days = state.days.map((day) => {
       if (day.appointments.includes(id)) {
-        console.log("Day ====>", day);
-        console.log("CALC SPOTS ======>", calcSpots(day, appointments));
         return { ...day, spots: calcSpots(day, appointments) };
       }
       return day;
     });
-    // console.log("APPOINTMENT -=====>", appointment);
-    // console.log("")
     //Placing data in the database
     return axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
       //setting the state once it's placed the data in the database.
-      //   console.log(res);
       setState({ ...state, appointments, days });
     });
   }
 
   function cancelInterview(id) {
-    // console.log("CANCEL INTERVIEW ======>", id);
-    // console.log(state.days);
-
     const appointment = {
       ...state.appointments[id],
       interview: null,
@@ -84,19 +74,13 @@ export default function useApplicationData() {
     };
 
     const days = state.days.map((day) => {
-      // console.log("Day.Appts =========>", day.appointments);
       if (day.appointments.includes(id)) {
-        console.log("CALC SPOTS ======>", calcSpots(day, appointments));
-        console.log("Day ====>", day);
         return { ...day, spots: calcSpots(day, appointments) };
       }
-      // console.log("Does not see appointment id");
       return day;
     });
 
-    // console.log("AFTER DAYS====>");
     return axios.delete(`api/appointments/${id}`).then((res) => {
-      // console.log(res);
       setState({ ...state, appointments, days });
     });
   }

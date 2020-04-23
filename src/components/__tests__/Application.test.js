@@ -55,15 +55,12 @@ describe("Application", () => {
     // debug();
     expect(getByText(appointment, "Saving Appointment")).toBeInTheDocument();
 
-    // console.log(prettyDOM(appointment));
     await waitForElement(() => queryByText(appointment, "Lydia Miller-Jones"));
 
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
     );
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
-
-    // console.log(prettyDOM(day));
   });
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
