@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "components/Button";
 
-//Confirm View, shows the message and can cancel or confirm an appointment
+//Confirm View, shows the message and can cancel or confirm action
 export default function Confirm(props) {
   return (
     <main className="appointment__card appointment__card--confirm">
