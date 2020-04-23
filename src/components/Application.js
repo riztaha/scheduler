@@ -28,7 +28,6 @@ export default function Application(props) {
   //it retrieves the interview data. It then sends all the data for the appt down to the Appointment form as props.
   const schedule = appointmentsArr.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    // console.log("APPLICATION 'interview' =====>", appointment.interview);
     return (
       <Appointment
         key={appointment.id}
